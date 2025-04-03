@@ -1,13 +1,19 @@
 import tiktoken
+from pytest import fixture
 
-def test_bpe():
+
+@fixture
+def sample_text():
+    with open("tests/The_Verdict.txt", "r") as file:
+        text = file.read()
+        yield text
+
+
+def test_bpe(sample_text):
     tokenizer = tiktoken.get_encoding("gpt2")
-    test = (
-        "Hello, do you like tea? <|endoftext|> In the sunlit terraces "
-        "of someunknownPlace"
-    )
-    integers = tokenizer.encode(test, allowed_special={"<|endoftext|>"})
-    print(integers)
-
+    integers = tokenizer.encode(sample_text)
     strings = tokenizer.decode(integers)
-    print(strings)
+
+    print(f"Encoded {len(integers)} tokens")
+
+    context_size = 4
