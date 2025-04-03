@@ -1,12 +1,4 @@
 import tiktoken
-from pytest import fixture
-
-
-@fixture
-def sample_text():
-    with open("tests/The_Verdict.txt", "r") as file:
-        text = file.read()
-        yield text
 
 
 def test_bpe(sample_text):
