@@ -1,5 +1,3 @@
-import tokenizer
-
 def main():
     print("Hello from llms-from-scratch!")
 

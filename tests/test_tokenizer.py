@@ -1,13 +1,11 @@
 import tiktoken
 
-def test_bpe():
-    tokenizer = tiktoken.get_encoding("gpt2")
-    test = (
-        "Hello, do you like tea? <|endoftext|> In the sunlit terraces "
-        "of someunknownPlace"
-    )
-    integers = tokenizer.encode(test, allowed_special={"<|endoftext|>"})
-    print(integers)
 
+def test_bpe(sample_text):
+    tokenizer = tiktoken.get_encoding("gpt2")
+    integers = tokenizer.encode(sample_text)
     strings = tokenizer.decode(integers)
-    print(strings)
+
+    print(f"Encoded {len(integers)} tokens")
+
+    context_size = 4
