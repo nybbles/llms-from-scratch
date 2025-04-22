@@ -3,10 +3,7 @@ import torch
 from data import create_dataloader_v1
 
 
-def test_dataloader(sample_text):
-    batch_size = 4
-    max_length = 256
-
+def test_dataloader(sample_text, batch_size, max_length):
     dataloader = create_dataloader_v1(
         sample_text,
         batch_size=batch_size,

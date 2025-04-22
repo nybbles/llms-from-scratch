@@ -1,8 +1,8 @@
 import tiktoken
 
 
-def test_bpe(sample_text):
-    tokenizer = tiktoken.get_encoding("gpt2")
+def test_bpe(sample_text, encoding_type):
+    tokenizer = tiktoken.get_encoding(encoding_type)
     integers = tokenizer.encode(sample_text)
     strings = tokenizer.decode(integers)
 
