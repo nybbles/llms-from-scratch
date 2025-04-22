@@ -10,7 +10,7 @@ def batch_size(request):
     return request.param
 
 
-@fixture(scope="module", params=[256])
+@fixture(scope="module", params=[128])
 def max_length(request):
     return request.param
 
