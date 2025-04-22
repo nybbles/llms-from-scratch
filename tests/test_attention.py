@@ -1,6 +1,10 @@
 import torch
 
-from attention import apply_attention_weights, dot_product_attention_weights
+from attention import (
+    apply_attention_weights,
+    dot_product_attention_weights,
+    scaled_dot_product_attention,
+)
 
 
 def test_dot_product_attention(batch_size, max_length, first_batch, embedder):
@@ -23,4 +27,18 @@ def test_apply_attention_weights(batch_size, max_length, embedding_dim, first_ba
     # vector has the same dimension as the input and there is one context
     # vector for each position in the input sequence.
     context_vectors = apply_attention_weights(attention_weights, embedded)
+    assert context_vectors.shape == torch.Size([batch_size, max_length, embedding_dim])
+
+
+def test_scaled_dot_product_attention(batch_size, max_length, embedding_dim, first_batch, embedder):
+    input_ids, target_ids = first_batch
+    embedded = embedder(input_ids)
+
+    query_embedder = torch.nn.Linear(embedding_dim, embedding_dim, bias=False)
+    key_embedder = torch.nn.Linear(embedding_dim, embedding_dim, bias=False)
+    value_embedder = torch.nn.Linear(embedding_dim, embedding_dim, bias=False)
+
+    context_vectors = scaled_dot_product_attention(
+        embedded, query_embedder, key_embedder, value_embedder
+    )
     assert context_vectors.shape == torch.Size([batch_size, max_length, embedding_dim])
