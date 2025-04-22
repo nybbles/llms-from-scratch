@@ -2,6 +2,7 @@ import tiktoken
 from pytest import fixture
 
 from data import create_dataloader_v1
+from embedding import create_embedder_v1
 
 
 @fixture(scope="module", params=[4])
@@ -50,3 +51,13 @@ def dataloader(sample_text, batch_size, max_length, embedding_dim, tokenizer):
     )
 
     return dataloader
+
+
+@fixture
+def embedder(tokenizer, max_length, embedding_dim):
+    return create_embedder_v1(tokenizer, embedding_dim=embedding_dim, context_length=max_length)
+
+
+@fixture
+def first_batch(dataloader):
+    return next(iter(dataloader))
